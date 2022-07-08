@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/User');
 const AuthService = require('../services/authService');
+const authDto = require('../dtos/auth-dto')
 
 //Register
 router.post('/register', async (req, res) => {
@@ -17,10 +18,10 @@ router.post('/register', async (req, res) => {
 
   try {
     const user = await newUser.save();
-    const { password, ...other } = user;
-    res.status(200).json(other);
+    const userData = new authDto(user)
+    return res.status(200).json({ user: userData });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err });
   }
 
 });
@@ -28,20 +29,25 @@ router.post('/register', async (req, res) => {
 //Login
 
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { email } = req.body;
 
   try {
     const user = await User.findOne({ email });
-    !user && res.status(404).json("user not found");
 
-    const validPassword = await AuthService.validPassword(password, user.password);
+    if (!user) {
+      return res.status(404).json({ message: "user not found" });
+    }
 
-    !validPassword && res.status(400).json('wrong password');
+    const validPassword = await AuthService.validPassword(req.body.password, user.password);
 
-    const { password, ...other } = user;
-    return res.status(200).json(other);
+    if (!validPassword) {
+      return res.status(400).json({ message: 'wrong password' });
+    }
+
+    const userData = new authDto(user)
+    return res.status(200).json(userData);
   } catch (err) {
-    return res.status(500).json(err.message);
+    return res.status(500).json({ message: err.message });
   }
 })
 

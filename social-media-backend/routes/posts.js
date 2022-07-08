@@ -11,7 +11,7 @@ router.post('/', async (req, res) => {
   } catch (err) {
     return res.status(500).json(err.message)
   }
-})
+});
 
 //update a post
 router.put('/:postId', async (req, res) => {
@@ -64,7 +64,6 @@ router.put('/:postId/like', async (req, res) => {
 })
 
 
-
 //get a post
 
 router.get('/:postId', async (req, res) => {
@@ -77,7 +76,8 @@ router.get('/:postId', async (req, res) => {
 })
 
 
-//get timeline posts
+//get user's all posts
+
 router.get('/timeline/:userId', async (req, res) => {
   try {
     const currentUser = await User.findById(req.params.userId)
@@ -88,9 +88,21 @@ router.get('/timeline/:userId', async (req, res) => {
     return res.status(200).json(userPosts.concat(...friendsPosts))
   } catch (err) {
     console.log(err.message);
-    return res.status(500).json(err.message)
+    return res.status(500).json(err.message);
   }
-})
+});
+
+//get single user's post
+router.get('/profile/:userId', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId)
+    const userPosts = await Post.find({ userId: user._id });
+    return res.status(200).json(userPosts)
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json(err.message);
+  }
+});
 
 
 module.exports = router;

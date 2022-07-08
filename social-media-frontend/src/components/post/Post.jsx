@@ -1,16 +1,33 @@
 import './post.scss';
 import { MoreVert, ThumbUpOutlined } from '@material-ui/icons'
-import { Users } from '../../dummyData'
 import { useCallback, useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { format } from 'timeago.js';
+import { Link } from 'react-router-dom';
 
+const url = process.env.REACT_APP_BACKEND_URL;
 export default function Post({
   desc,
   image,
   createdAt,
   userId,
   likes,
-  comment }) {
-  const user = Users.find(u => u.id === userId);
+  comments }) {
+
+  const [user, setUser] = useState({})
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios.get(`${url}/users/${userId}`);
+        setUser(response.data);
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getUser();
+  }, [userId])
+
   const [liked, setLiked] = useState(likes.length);
   const [isLiked, setIsLiked] = useState(false);
 
@@ -24,9 +41,11 @@ export default function Post({
       <div className="post-wrapper">
         <div className="post-top">
           <div className="post-top-left">
-            <img className="post-profile-img" src={`${process.env.REACT_APP_PUBLIC_FOLDER}/${user?.profilePicture}`} alt="" />
+            <Link to={`profile/${userId}`} style={{ textDecoration: "none" }}>
+              <img className="post-profile-img" src={user.profilePicture || `${process.env.REACT_APP_PUBLIC_FOLDER}/person/noAvatar.png`} alt="" />
+            </Link>
             <span className="post-username">{user?.username}</span>
-            <span className="post-date">{createdAt}</span>
+            <span className="post-date">{format(createdAt)}</span>
           </div>
           <div className="post-top-right">
             <MoreVert />
@@ -46,7 +65,7 @@ export default function Post({
             <span className="post-like-counter">{liked} people like it</span>
           </div>
           <div className="post-bottom-right">
-            <span className="post-comment-text">{comment} comments</span>
+            <span className="post-comment-text">{comments.length} comments</span>
           </div>
         </div>
       </div>

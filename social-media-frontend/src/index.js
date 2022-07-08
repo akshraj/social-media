@@ -5,24 +5,16 @@ import App from './App';
 import {
   BrowserRouter as Router,
 } from "react-router-dom";
-
-import {
-  QueryClient,
-  QueryClientProvider,
-} from 'react-query';
-
-import { ReactQueryDevtools } from 'react-query/devtools'
-
-const queryClient = new QueryClient()
+import { store } from './redux/store'
+import { Provider } from 'react-redux'
 
 ReactDOM.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+    <Provider store={store}>
       <Router>
         <App />
       </Router>
-    </QueryClientProvider>
+    </Provider>
   </React.StrictMode>, document.getElementById('root')
 );
 
