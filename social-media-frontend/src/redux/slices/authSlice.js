@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isFetching: false,
-  user: null,
+  user: JSON.parse(localStorage.getItem("user")) || null,
   err: null,
 }
 

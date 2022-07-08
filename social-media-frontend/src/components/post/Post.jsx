@@ -1,21 +1,27 @@
 import './post.scss';
 import { MoreVert, ThumbUpOutlined } from '@material-ui/icons'
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { format } from 'timeago.js';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { likePost } from '../../apis/posts';
 
 const url = process.env.REACT_APP_BACKEND_URL;
 export default function Post({
+  _id,
   desc,
   image,
   createdAt,
   userId,
   likes,
-  comments }) {
+  comments,
+  isProfile }) {
+  const navigate = useNavigate();
+  const [user, setUser] = useState({});
 
-  const [user, setUser] = useState({})
+  const [liked, setLiked] = useState(likes.length);
+  const [isLiked, setIsLiked] = useState(likes.includes(userId));
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -28,22 +34,29 @@ export default function Post({
     getUser();
   }, [userId])
 
-  const [liked, setLiked] = useState(likes.length);
-  const [isLiked, setIsLiked] = useState(false);
 
-  const likeHandler = useCallback(() => {
+  const likeHandler = async () => {
     setIsLiked(prev => !prev);
+    await likePost(_id, userId);
     setLiked(prev => isLiked ? prev - 1 : prev + 1);
-  }, [isLiked]);
+  }
+
+  console.log(isLiked)
+
+  const handleNavigate = () => {
+    if (isProfile) {
+      return;
+    } else {
+      navigate(`profile/${userId}`)
+    }
+  }
 
   return (
     <div className="post">
       <div className="post-wrapper">
         <div className="post-top">
           <div className="post-top-left">
-            <Link to={`profile/${userId}`} style={{ textDecoration: "none" }}>
-              <img className="post-profile-img" src={user.profilePicture || `${process.env.REACT_APP_PUBLIC_FOLDER}/person/noAvatar.png`} alt="" />
-            </Link>
+            <img className="post-profile-img" style={{ cursor: !isProfile ? 'pointer' : 'default' }} src={user.profilePicture || `${process.env.REACT_APP_PUBLIC_FOLDER}/person/noAvatar.png`} alt="" onClick={handleNavigate} />
             <span className="post-username">{user?.username}</span>
             <span className="post-date">{format(createdAt)}</span>
           </div>

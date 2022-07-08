@@ -1,10 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom';
-
 import './topbar.scss'
+import { Link, useNavigate } from 'react-router-dom';
 import { Search, Person, Chat, Notifications } from '@material-ui/icons'
+import { useSelector } from 'react-redux';
 
 export default function TopBar() {
   const navigate = useNavigate();
+  const user = useSelector(state => state.auth.user)
   return (
     <div className="topbar-container">
       <div className="topbar-left">
@@ -43,7 +44,7 @@ export default function TopBar() {
             </span>
           </div>
         </div>
-        <img src="/assets/person/1.jpeg" alt="" className="topbar-img" onClick={() => navigate("/profile/akshay-raj")} />
+        <img src={user?.profilePicture ? user.profilePicture : process.env.REACT_APP_PUBLIC_FOLDER + '/person/noAvatar.png'} alt="" className="topbar-img" onClick={() => navigate(`/profile/${user?._id}`)} />
       </div>
     </div>
   )

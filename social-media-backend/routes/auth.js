@@ -5,21 +5,18 @@ const authDto = require('../dtos/auth-dto')
 
 //Register
 router.post('/register', async (req, res) => {
-  const { username, email, password, desc, city, from } = req.body;
+  const { username, email, password } = req.body;
 
   const newUser = new User({
     username,
     email,
     password: await AuthService.generateHashedPassword(password),
-    desc,
-    city,
-    from
   });
 
   try {
     const user = await newUser.save();
-    const userData = new authDto(user)
-    return res.status(200).json({ user: userData });
+    const userData = new authDto(user);
+    return res.status(200).json(userData);
   } catch (err) {
     return res.status(500).json({ message: err });
   }
@@ -47,6 +44,7 @@ router.post('/login', async (req, res) => {
     const userData = new authDto(user)
     return res.status(200).json(userData);
   } catch (err) {
+    console.log(err.message)
     return res.status(500).json({ message: err.message });
   }
 })

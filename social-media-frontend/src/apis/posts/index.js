@@ -1,10 +1,27 @@
 import axios from 'axios';
+import { postFetchStart, postFetchSuccess, postFetchFailed } from '../../redux/slices/postSlice';
 
 const url = process.env.REACT_APP_BACKEND_URL
 
-export const getPosts = async (userId, profile = false) => {
+export const getPosts = async ({ userId, profile = false, dispatch }) => {
   let slug = 'timeline/';
   if (profile) slug = 'profile/';
-  const response = await axios.get(`${url}/posts/${slug}${userId}`);
-  return response;
+  dispatch(postFetchStart());
+  try {
+    const response = await axios.get(`${url}/posts/${slug}${userId}`);
+    dispatch(postFetchSuccess(response.data))
+  } catch (err) {
+    dispatch(postFetchFailed(err.message))
+  }
+}
+
+export const likePost = async (postId, userId) => {
+  try {
+    const response = await axios.put(`${url}/posts/${postId}/like`, {
+      userId
+    });
+    console.log(response.data);
+  } catch (err) {
+    console.log(err.message)
+  }
 }

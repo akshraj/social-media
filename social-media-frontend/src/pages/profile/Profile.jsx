@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react';
+import { useParams, useLocation } from 'react-router-dom'
 import Feed from '../../components/feed/Feed';
 import Rightbar from '../../components/rightbar/Rightbar';
 import Sidebar from '../../components/sidebar/Sidebar';
@@ -11,25 +11,43 @@ const url = process.env.REACT_APP_BACKEND_URL;
 
 export default function Profile() {
   const [user, setUser] = useState({});
+  let isMountedRef = useRef(false);
+
   const { userId } = useParams();
+
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await axios.get(`${url}/users/${userId}`);
-        setUser(response.data);
-      } catch (err) {
-        console.log(err);
+    isMountedRef.current = true;
+
+    if (isMountedRef.current) {
+      const getUser = async () => {
+        try {
+          const response = await axios.get(`${url}/users/${userId}`);
+          setUser(response.data);
+        } catch (err) {
+          console.log(err);
+        }
       }
+      getUser();
     }
-    getUser();
+
+    return () => {
+      isMountedRef.current = false
+    }
   }, [userId]);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return () => {
+      isMountedRef.current = false
+    }
+  }, [])
 
   return (
     <>
       <TopBar />
       <div className="profile">
         <Sidebar />
-
         <div className="profile-right">
           <div className="profile-right-top">
             <div className="profile-cover">

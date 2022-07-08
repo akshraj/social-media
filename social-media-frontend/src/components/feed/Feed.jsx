@@ -2,33 +2,32 @@ import Post from '../post/Post';
 import Share from '../share/Share';
 import './Feed.scss';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getPosts } from '../../apis/posts';
-import LocalStorage from '../../utils/localStorage';
-
-const local = new LocalStorage();
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function Feed({ profile, userId }) {
-  const user = JSON.parse(local.getItem('user'));
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
+  const { isFetching, posts, error } = useSelector(state => state.post);
 
-  const [data, setData] = useState([])
   useEffect(() => {
     const getAllPosts = async () => {
       try {
-        const response = profile ? await getPosts(userId, profile) : await getPosts(user?._id);
-        setData(response.data);
+        profile ? await getPosts({ userId, profile, dispatch }) : await getPosts({ userId: user?._id, dispatch });
       } catch (err) {
         console.log(err.message)
       }
     }
     getAllPosts();
-  }, [profile, userId])
+  }, [profile, userId, user?._id, dispatch]);
+
 
   return (
     <div className="feed">
       <div className="feed-wrapper">
         <Share />
-        {data?.map(post => <Post {...post} key={post._id} />)}
+        {posts?.map(post => <Post {...post} key={post._id} isProfile={profile} />)}
       </div>
     </div>
   )
