@@ -25,3 +25,22 @@ export const likePost = async (postId, userId) => {
     console.log(err.message)
   }
 }
+
+export const imageUpload = async (formData) => {
+  try {
+    await axios.post(`${url}/upload`, formData);
+  } catch (err) {
+    console.log(err.message)
+  }
+}
+
+export const createPost = async (post, userId) => {
+  try {
+    await axios.post(`${url}/posts`, {
+      userId,
+      ...post
+    });
+  } catch (err) {
+    console.log(err.message)
+  }
+}

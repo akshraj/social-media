@@ -1,21 +1,67 @@
 import './share.scss';
-import { PermMedia, Label, Room, EmojiEmotions } from '@material-ui/icons'
+import { PermMedia, Label, Room, EmojiEmotions, Cancel } from '@material-ui/icons'
+import { useSelector, useDispatch } from 'react-redux';
+import { useRef, useState } from 'react';
+import { createPost, getPosts, imageUpload } from '../../apis/posts';
+
+const url = process.env.REACT_APP_PUBLIC_FOLDER;
 
 export default function Share() {
+  const user = useSelector(state => state.auth.user);
+  const shareRef = useRef('');
+
+  const [file, setFile] = useState(null);
+
+  const dispatch = useDispatch();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const desc = shareRef.current.value;
+    const newPost = { desc }
+    if (file) {
+      const formData = new FormData();
+      const fileName = Date.now() + file.name;
+      formData.append("name", fileName);
+      formData.append("file", file)
+      newPost.image = fileName;
+      try {
+        await imageUpload(formData);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    try {
+      await createPost(newPost, user._id);
+      setFile(null);
+      await getPosts({ userId: user?._id, dispatch });
+      shareRef.current.value = '';
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="share">
       <div className="share-wrapper">
         <div className="share-top">
-          <img className="share-profile-img" src="/assets/person/1.jpeg" alt="" />
-          <input type="text" className='share-input' placeholder="What's in your mind Akshay?" />
+          <img className="share-profile-img" src={user?.profilePicture || url + '/person/noAvatar.png'} alt="" />
+          <input type="text" className='share-input' placeholder={`What's in your mind ${user?.username}?`} ref={shareRef} />
         </div>
         <hr className="share-hr" />
+        {file && (
+          <div className="share-image-container">
+            <img className="share-img" src={URL.createObjectURL(file)} alt="" />
+            <Cancel className="share-cancel-img" onClick={() => setFile(null)} />
+          </div>
+        )}
         <div className="share-bottom">
           <div className="share-options">
-            <div className="share-option">
+            <label htmlFor="file" className="share-option">
               <PermMedia htmlColor='tomato' className="share-icon" />
               <span className="share-option-text">Photo or Video</span>
-            </div>
+              <input type="file" id="file" accept='image/*' onChange={(e) => setFile(e.target.files[0])} style={{ display: 'none' }} />
+            </label>
             <div className="share-option">
               <Label className="share-icon" htmlColor='blue' />
               <span className="share-option-text">Tag</span>
@@ -29,7 +75,7 @@ export default function Share() {
               <span className="share-option-text">Feelings</span>
             </div>
           </div>
-          <button className='share-button'>Share</button>
+          <button className='share-button' onClick={handleSubmit}>Share</button>
         </div>
       </div>
     </div>

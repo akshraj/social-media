@@ -17,6 +17,7 @@ export default function Post({
   likes,
   comments,
   isProfile }) {
+
   const navigate = useNavigate();
   const [user, setUser] = useState({});
 
@@ -41,8 +42,6 @@ export default function Post({
     setLiked(prev => isLiked ? prev - 1 : prev + 1);
   }
 
-  console.log(isLiked)
-
   const handleNavigate = () => {
     if (isProfile) {
       return;
@@ -56,7 +55,7 @@ export default function Post({
       <div className="post-wrapper">
         <div className="post-top">
           <div className="post-top-left">
-            <img className="post-profile-img" style={{ cursor: !isProfile ? 'pointer' : 'default' }} src={user.profilePicture || `${process.env.REACT_APP_PUBLIC_FOLDER}/person/noAvatar.png`} alt="" onClick={handleNavigate} />
+            <img crossOrigin="anonymous" className="post-profile-img" style={{ cursor: !isProfile ? 'pointer' : 'default' }} src={user.profilePicture || `${process.env.REACT_APP_PUBLIC_FOLDER}/person/noAvatar.png`} alt="" onClick={handleNavigate} />
             <span className="post-username">{user?.username}</span>
             <span className="post-date">{format(createdAt)}</span>
           </div>
@@ -68,7 +67,7 @@ export default function Post({
           {desc && <span className="post-text">
             {desc}
           </span>}
-          {image && <img className="post-img" src={`${process.env.REACT_APP_PUBLIC_FOLDER}/${image}`} alt="" />}
+          {image && <img className="post-img" src={`${process.env.REACT_APP_BACKEND_IMAGE_URL}/${image}`} alt="" />}
         </div>
         <div className="post-bottom">
           <div className="post-bottom-left">

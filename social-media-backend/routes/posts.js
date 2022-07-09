@@ -85,7 +85,12 @@ router.get('/timeline/:userId', async (req, res) => {
     const friendsPosts = await Promise.all(
       currentUser.followings.map(friendId => Post.find({ userId: friendId }))
     );
-    return res.status(200).json(userPosts.concat(...friendsPosts))
+
+    let posts = userPosts.concat(...friendsPosts);
+
+    posts = posts.sort((a, b) => b.createdAt - a.createdAt);
+
+    return res.status(200).json(posts);
   } catch (err) {
     console.log(err.message);
     return res.status(500).json(err.message);
@@ -96,7 +101,7 @@ router.get('/timeline/:userId', async (req, res) => {
 router.get('/profile/:userId', async (req, res) => {
   try {
     const user = await User.findById(req.params.userId)
-    const userPosts = await Post.find({ userId: user._id });
+    const userPosts = await Post.find({ userId: user._id }).sort({ 'createdAt': -1 });
     return res.status(200).json(userPosts)
   } catch (err) {
     console.log(err.message);
