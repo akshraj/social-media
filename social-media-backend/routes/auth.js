@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const User = require('../models/User');
 const AuthService = require('../services/authService');
-const authDto = require('../dtos/auth-dto')
 
 //Register
 router.post('/register', async (req, res) => {
@@ -15,8 +14,7 @@ router.post('/register', async (req, res) => {
 
   try {
     const user = await newUser.save();
-    const userData = new authDto(user);
-    return res.status(200).json(userData);
+    return res.status(200).json(user);
   } catch (err) {
     return res.status(500).json({ message: err });
   }
@@ -41,8 +39,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'wrong password' });
     }
 
-    const userData = new authDto(user)
-    return res.status(200).json(userData);
+    return res.status(200).json(user);
   } catch (err) {
     console.log(err.message)
     return res.status(500).json({ message: err.message });

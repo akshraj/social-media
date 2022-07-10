@@ -2,13 +2,15 @@ import './register.scss';
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from 'react';
 import { register } from '../../apis/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../../components/spinner/Spinner';
 
 
 export default function Register() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+  const { isFetching } = useSelector(state => state.auth);
 
   const userNameRef = useRef('');
   const emailRef = useRef('');
@@ -65,7 +67,7 @@ export default function Register() {
             <input type="password" className="login-input" placeholder="Password" ref={passwordRef} />
             <input type="password" className="login-input" placeholder="Confirm Password" ref={confirmPasswordRef} />
             {error && <p style={{ color: 'red' }}>{errorMessage}</p>}
-            <button className="login-button">Register</button>
+            <button className="login-button" disabled={isFetching}>{isFetching ? <Spinner /> : 'Register'}</button>
             <span className="login-forgot">Forgot Password?</span>
             <div className="login-register-button" onClick={() => navigate("/login", { replace: true })}>Log into your Account</div>
           </form>

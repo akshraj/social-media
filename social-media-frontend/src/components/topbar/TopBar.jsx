@@ -1,11 +1,24 @@
 import './topbar.scss'
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, Person, Chat, Notifications } from '@material-ui/icons'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { signOut } from '../../redux/slices/authSlice'
 
 export default function TopBar() {
+  const [showDropDown, setShowDropDown] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(state => state.auth.user)
+  const user = useSelector(state => state.auth.user);
+
+  const toggleDropDown = () => {
+    setShowDropDown(prev => !prev)
+  }
+
+  const signOutHandler = () => {
+    dispatch(signOut());
+  }
+
   return (
     <div className="topbar-container">
       <div className="topbar-left">
@@ -44,7 +57,14 @@ export default function TopBar() {
             </span>
           </div>
         </div>
-        <img src={user?.profilePicture ? user.profilePicture : process.env.REACT_APP_PUBLIC_FOLDER + '/person/noAvatar.png'} alt="" className="topbar-img" onClick={() => navigate(`/profile/${user?._id}`)} />
+
+        <div className="topbar-profile-img-container">
+          <img src={user?.profilePicture ? user.profilePicture : process.env.REACT_APP_PUBLIC_FOLDER + '/person/noAvatar.png'} alt="" className="topbar-img" onClick={toggleDropDown} />
+          {showDropDown && <ul className="topbar-profile-img-dropdown">
+            <li onClick={() => navigate(`/profile/${user?._id}`)}>Profile</li>
+            <li onClick={signOutHandler}>Sign Out</li>
+          </ul>}
+        </div>
       </div>
     </div>
   )

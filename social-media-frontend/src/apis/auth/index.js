@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { loginStart, loginSuccess, loginError } from '../../redux/slices/authSlice';
+import { loginStart, loginSuccess, loginError, registerStart, registerSuccess, registerError } from '../../redux/slices/authSlice';
 
 const url = process.env.REACT_APP_BACKEND_URL;
 
@@ -16,11 +16,11 @@ export const login = async (userCreds, dispatch) => {
 }
 
 export const register = async (userCreds, dispatch) => {
-  dispatch(loginStart());
+  dispatch(registerStart());
   try {
-    const response = await axios.post(`${url}/auth/register`, userCreds);
-    dispatch(loginSuccess(response.data));
+    await axios.post(`${url}/auth/register`, userCreds);
+    dispatch(registerSuccess());
   } catch (err) {
-    dispatch(loginError(err.message));
+    dispatch(registerError(err.message));
   }
 }

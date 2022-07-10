@@ -60,6 +60,12 @@ const UserSchema = new mongoose.Schema(
       enum: [1, 2, 3],
       default: 1
     }
-  }, { timestamps: true })
+  }, { timestamps: true });
+
+UserSchema.methods.toJSON = function () {
+  var obj = this.toObject(); //or var obj = this;
+  delete obj.password;
+  return obj;
+}
 
 module.exports = mongoose.model('User', UserSchema);

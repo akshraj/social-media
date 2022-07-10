@@ -11,9 +11,29 @@ import {
   School,
 } from '@material-ui/icons'
 import CloseFriend from '../closeFriend/CloseFriend'
-import { Users } from '../../dummyData'
+import { Users } from '../../dummyData';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { getFriends } from '../../apis/user';
 
 export default function Sidebar() {
+  const user = useSelector(state => state.auth.user);
+  const friends = useSelector(state => state.user.friends);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        await getFriends(user._id, dispatch);
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fetchFriends()
+  }, [user._id, dispatch]);
+
+  console.log(friends)
+
+
   return (
     <div className="sidebar">
       <div className="sidebar-wrapper">
@@ -60,7 +80,7 @@ export default function Sidebar() {
         </button>
         <hr className='sidebar-hr' />
         <ul className="sidebar-friend-list">
-          {Users.map(user => <CloseFriend {...user} key={user.id} />)}
+          {friends && friends.map(friend => <CloseFriend {...friend} key={friend._id} />)}
         </ul>
       </div>
     </div>

@@ -41,14 +41,14 @@ export default function Login() {
           </span>
         </div>
         <div className="login-right">
-          <div className="login-box">
+          <form className="login-box" onSubmit={handleLogin}>
             <input type="email" className="login-input" placeholder="Email" ref={emailRef} onFocus={() => setError(false)} />
             <input type="password" className="login-input" placeholder="Password" ref={passwordRef} onFocus={() => setError(false)} required min={6} autoComplete="true" />
-            <button className='login-button' disabled={isFetching} onClick={handleLogin}>{isFetching ? <Spinner /> : 'Login'}</button>
+            <button className='login-button' disabled={isFetching}>{isFetching ? <Spinner /> : 'Login'}</button>
             {error && <p style={{ color: 'red', fontWeight: 400, textAlign: 'center' }}>{errorMessage}</p>}
             <span className="login-forgot">Forgot Password?</span>
             <div className="login-register-button" onClick={() => navigate("/register", { replace: true })}>Create a New Account</div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

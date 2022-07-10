@@ -1,0 +1,133 @@
+.rightbar {
+  -webkit-box-flex: 3.5;
+      -ms-flex: 3.5;
+          flex: 3.5;
+}
+
+.rightbar .rightbar-wrapper {
+  padding: 20px 20px 0 0;
+}
+
+.rightbar .rightbar-wrapper .rightbar-title {
+  margin-bottom: 20px;
+}
+
+.rightbar .rightbar-wrapper .birthday-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.rightbar .rightbar-wrapper .birthday-container .birthday-img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.rightbar .rightbar-wrapper .birthday-container .birthday-text {
+  font-weight: 300;
+  font-size: 15px;
+}
+
+.rightbar .rightbar-wrapper .rightbar-ad {
+  width: 100%;
+  border-radius: 10px;
+  margin: 30px 0;
+}
+
+.rightbar .rightbar-wrapper .rightbar-friend-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.rightbar .rightbar-wrapper .rightbar-friend-suggestion-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  height: 320px;
+  overflow-y: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.rightbar-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.rightbar-following-img {
+  width: 100px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+}
+
+.rightbar-info {
+  margin-bottom: 30px;
+}
+
+.rightbar-info .rightbar-info-item {
+  margin-bottom: 10px;
+}
+
+.rightbar-info .rightbar-info-item .rightbar-info-key {
+  font-weight: 500;
+  margin-right: 10px;
+  color: #555;
+}
+
+.rightbar-info .rightbar-info-item .rightbar-info-value {
+  font-weight: 300;
+  text-transform: capitalize;
+}
+
+.rightbar-followings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.rightbar-followings .rightbar-following {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 20px;
+  cursor: pointer;
+  margin: 0 10px;
+  -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #e4e2ee;
+}
+
+.rightbar-followings .rightbar-following img {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.rightbar-followings .rightbar-following .rightbar-following-name {
+  text-align: center;
+  font-weight: 500;
+  text-transform: capitalize;
+  font-size: 15px;
+}
+/*# sourceMappingURL=rightbar.css.map */

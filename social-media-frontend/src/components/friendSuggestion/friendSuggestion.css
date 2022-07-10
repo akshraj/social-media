@@ -1,0 +1,52 @@
+.friend-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100px;
+  height: 150px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #fff;
+  padding: 10px;
+  -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  margin: 10px 10px;
+  border-radius: 10px;
+}
+
+.friend-card .friend-img-container {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.friend-card .friend-img-container img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.friend-card .friend-name {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.friend-card button {
+  border: none;
+  padding: 8px 10px;
+  background-color: #1877f2;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+/*# sourceMappingURL=friendSuggestion.css.map */

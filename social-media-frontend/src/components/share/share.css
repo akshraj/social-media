@@ -1,0 +1,121 @@
+.share {
+  width: 100%;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+}
+
+.share .share-wrapper {
+  padding: 10px;
+}
+
+.share .share-wrapper .share-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.share .share-wrapper .share-top .share-profile-img {
+  width: 50px;
+  height: 50px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.share .share-wrapper .share-top .share-input {
+  border: none;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.share .share-wrapper .share-top .share-input:focus {
+  outline: none;
+}
+
+.share .share-wrapper .share-image-container {
+  position: relative;
+  width: 220px;
+  height: 150px;
+  margin-left: 20px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  -o-object-fit: cover;
+     object-fit: cover;
+  overflow: hidden;
+}
+
+.share .share-wrapper .share-image-container .share-cancel-img {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.share .share-wrapper .share-image-container img {
+  width: 100%;
+  height: 100%;
+}
+
+.share .share-wrapper .share-hr {
+  margin: 20px;
+}
+
+.share .share-wrapper .share-bottom {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.share .share-wrapper .share-bottom .share-options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: 20px;
+}
+
+.share .share-wrapper .share-bottom .share-options .share-option {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 15px;
+  cursor: pointer;
+}
+
+.share .share-wrapper .share-bottom .share-options .share-option .share-icon {
+  margin-right: 5px;
+  font-size: 18px;
+}
+
+.share .share-wrapper .share-bottom .share-options .share-option .share-option-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.share .share-wrapper .share-bottom .share-button {
+  border: none;
+  padding: 7px;
+  border-radius: 5px;
+  background-color: green;
+  font-weight: 500;
+  color: #fff;
+  margin-right: 20px;
+  cursor: pointer;
+}
+/*# sourceMappingURL=share.css.map */

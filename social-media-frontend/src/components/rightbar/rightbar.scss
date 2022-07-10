@@ -32,6 +32,16 @@
       margin: 0;
       list-style: none;
     }
+    .rightbar-friend-suggestion-list {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      width: 100%;
+      flex-wrap: wrap;
+      height: 320px;
+      overflow-y: auto;
+      display: flex;
+    }
   }
 }
 
@@ -69,12 +79,30 @@
 .rightbar-followings {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
 
   .rightbar-following {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
     cursor: pointer;
+    margin: 0 10px;
+    -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+    box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(228, 226, 238);
+
+    img {
+      height: 100px;
+      width: 100px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+    .rightbar-following-name {
+      text-align: center;
+      font-weight: 500;
+      text-transform: capitalize;
+      font-size: 15px;
+    }
   }
 }

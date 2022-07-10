@@ -43,13 +43,11 @@ router.delete('/:id', async (req, res) => {
 
 //get a user
 router.get('/:id', async (req, res) => {
-  console.log(req.params)
   try {
     const user = await User.findById(req.params.id)
     const { password, updatedAt, ...other } = user._doc;
     return res.status(200).json(other);
   } catch (err) {
-    console.log(err.message)
     return res.status(500).json(err)
   }
 })
@@ -103,13 +101,34 @@ router.put("/:id/unfollow", async (req, res) => {
   } else {
     res.status(403).json("you can not unfollow yourself")
   }
+});
+
+
+//get friends list
+
+router.get('/:id/friends', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const followings = await Promise.all(
+      user.followings.map(user => User.findById(user)
+      )
+    );
+    res.status(200).json(followings);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
+router.get('/:id/all', async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const users = await User.find({});
+    const filteredUser = users.filter(user => String(user._id) !== String(userId));
+    return res.status(200).json(filteredUser);
+  } catch (err) {
+    return res.status(500).json(err.message);
+  }
 })
 
-
-
-
-router.get('/', (req, res) => {
-  res.send('user page')
-});
 
 module.exports = router;
