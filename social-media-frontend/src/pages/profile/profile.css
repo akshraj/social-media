@@ -50,6 +50,7 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  margin-bottom: 20px;
 }
 
 .profile .profile-right .profile-right-top .profile-info .profile-info-name {
@@ -60,6 +61,16 @@
 
 .profile .profile-right .profile-right-top .profile-info .profile-info-desc {
   font-weight: 300;
+}
+
+.profile .profile-right .profile-right-top .profile-info button {
+  border: none;
+  background-color: #1877f2;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .profile .profile-right .profile-right-bottom {

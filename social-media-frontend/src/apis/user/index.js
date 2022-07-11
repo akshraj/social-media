@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { friendFetching, friendFetcingSuccess, friendFetchingFailed, usersFetchingStart, usersFetcingSuccess, usersFetchingFailed } from '../../redux/slices/userSlice'
+import { friendFetching, friendFetcingSuccess, friendFetchingFailed, usersFetchingStart, usersFetcingSuccess, usersFetchingFailed, pendingRequestsSuccess, sendRequestResponseSuccess } from '../../redux/slices/userSlice'
 
 const url = process.env.REACT_APP_BACKEND_URL;
 
 export const getAllUsers = async (userId, dispatch) => {
-  console.log('all-users', userId);
   try {
     dispatch(usersFetchingStart());
     const response = await axios.get(`${url}/users/${userId}/all`);
@@ -23,3 +22,34 @@ export const getFriends = async (userId, dispatch) => {
     dispatch(friendFetchingFailed(err.message))
   }
 }
+
+export const sendRequest = async (id, userId, dispatch) => {
+  try {
+    const response = await axios.put(`${url}/users/${id}/send-request`, {
+      userId
+    });
+    dispatch(sendRequestResponseSuccess(response.data))
+  } catch (err) {
+    console.log(err.message);
+  }
+}
+
+export const getAllPendingRequests = async (userId, dispatch) => {
+  try {
+    const response = await axios.get(`${url}/users/${userId}/pending-requests`);
+    dispatch(pendingRequestsSuccess(response?.data))
+    return response;
+  } catch (err) {
+    console.log(err.message)
+  }
+}
+
+export const getUser = async (userId) => {
+  try {
+    const response = await axios.get(`${url}/users/${userId}`);
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+}
+

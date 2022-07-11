@@ -7,6 +7,9 @@ const INITIAL_STATE = {
   usersFetching: false,
   users: [],
   usersFetchError: null,
+  currentUserRequestSend: [],
+  pendingRequests: [],
+  sendRequestRes: null,
 }
 
 export const userSlice = createSlice({
@@ -34,10 +37,16 @@ export const userSlice = createSlice({
     usersFetchingFailed(state, action) {
       state.usersFetching = false;
       state.usersFetchError = action.payload;
+    },
+    pendingRequestsSuccess(state, action) {
+      state.pendingRequests = action.payload;
+    },
+    sendRequestResponseSuccess(state, action) {
+      state.sendRequestRes = action.payload
     }
   }
 });
 
-export const { friendFetching, friendFetcingSuccess, friendFetchingFailed, usersFetchingStart, usersFetcingSuccess, usersFetchingFailed } = userSlice.actions;
+export const { friendFetching, friendFetcingSuccess, friendFetchingFailed, usersFetchingStart, usersFetcingSuccess, usersFetchingFailed, pendingRequestsSuccess, sendRequestResponseSuccess } = userSlice.actions;
 
 export default userSlice.reducer;

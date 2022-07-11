@@ -70,6 +70,7 @@
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .rightbar-info {

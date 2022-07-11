@@ -2,21 +2,41 @@ import './topbar.scss'
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, Person, Chat, Notifications } from '@material-ui/icons'
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { signOut } from '../../redux/slices/authSlice'
+import RequestReceivedUserCard from '../requestReceivedUserCard/RequestReceivedUserCard';
+import { getAllPendingRequests } from '../../apis/user';
+
 
 export default function TopBar() {
   const [showDropDown, setShowDropDown] = useState(false);
+  const [showPersonListDropDown, setShowPersonListDropDown] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(state => state.auth.user);
+  const currentUser = useSelector(state => state.auth.user);
+  const pendingFriendRequests = useSelector(state => state.user.pendingRequests);
+
+  useEffect(() => {
+    const getCurrentUserRequestReceived = async () => {
+      try {
+        await getAllPendingRequests(currentUser?._id, dispatch);
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+    getCurrentUserRequestReceived();
+  }, [currentUser._id, showDropDown, dispatch]);
 
   const toggleDropDown = () => {
-    setShowDropDown(prev => !prev)
+    setShowDropDown(prev => !prev);
   }
 
   const signOutHandler = () => {
     dispatch(signOut());
+  }
+
+  const personListViewHandler = (e) => {
+    setShowPersonListDropDown(!showPersonListDropDown);
   }
 
   return (
@@ -38,11 +58,15 @@ export default function TopBar() {
           <span className="topbar-link">Timeline</span>
         </div>
         <div className="topbar-icons">
-          <div className="topbar-icon-item">
-            <Person />
+          <div className="topbar-icon-item"  >
+            <Person onClick={personListViewHandler} />
             <span className="topbar-icon-badge">
               1
             </span>
+            {showPersonListDropDown && <div className="topbar-person-view" onClick={e => e.stopPropagation()}>
+              {pendingFriendRequests?.length > 0 ? pendingFriendRequests?.map(request => <RequestReceivedUserCard key={request._id} {...request} />) : <div style={{ color: 'black', fontSize: '14px', textAlign: 'center', marginTop: '10px' }}>No Pending Friend Requests</div>}
+            </div>
+            }
           </div>
           <div className="topbar-icon-item">
             <Chat />
@@ -59,9 +83,9 @@ export default function TopBar() {
         </div>
 
         <div className="topbar-profile-img-container">
-          <img src={user?.profilePicture ? user.profilePicture : process.env.REACT_APP_PUBLIC_FOLDER + '/person/noAvatar.png'} alt="" className="topbar-img" onClick={toggleDropDown} />
+          <img src={currentUser?.profilePicture ? currentUser.profilePicture : process.env.REACT_APP_PUBLIC_FOLDER + '/person/noAvatar.png'} alt="" className="topbar-img" onClick={toggleDropDown} />
           {showDropDown && <ul className="topbar-profile-img-dropdown">
-            <li onClick={() => navigate(`/profile/${user?._id}`)}>Profile</li>
+            <li onClick={() => navigate(`/profile/${currentUser?._id}`)}>Profile</li>
             <li onClick={signOutHandler}>Sign Out</li>
           </ul>}
         </div>

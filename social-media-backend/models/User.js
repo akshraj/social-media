@@ -59,6 +59,18 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       enum: [1, 2, 3],
       default: 1
+    },
+    requestSend: {
+      type: Array,
+      default: []
+    },
+    requestReceived: {
+      type: Array,
+      default: []
+    },
+    friends: {
+      type: Array,
+      default: []
     }
   }, { timestamps: true });
 

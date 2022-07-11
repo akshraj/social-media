@@ -31,8 +31,6 @@ export default function Sidebar() {
     fetchFriends()
   }, [user._id, dispatch]);
 
-  console.log(friends)
-
 
   return (
     <div className="sidebar">
