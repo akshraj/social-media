@@ -1,18 +1,19 @@
 import './friendSuggestion.scss';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { sendRequest } from '../../apis/user';
 import { useNavigate } from 'react-router-dom';
 
 
 export default function FriendSuggestion({ _id, username, profilePicture, requestReceived, profile = false }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const currentUser = useSelector(state => state.auth.user);
   const [requestSendState, setRequestSendState] = useState(requestReceived?.includes(currentUser?._id));
 
   const requestSendHandler = async () => {
     try {
-      await sendRequest(_id, currentUser?._id);
+      await sendRequest(_id, currentUser?._id, dispatch);
       setRequestSendState(prev => !prev);
     } catch (err) {
       console.log(err);

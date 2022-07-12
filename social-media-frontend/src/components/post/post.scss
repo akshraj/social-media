@@ -34,6 +34,41 @@
           font-size: 12px;
         }
       }
+      .post-top-right {
+        position: relative;
+
+        .post-top-right-icon {
+          cursor: pointer;
+        }
+
+        .disabled {
+          pointer-events: none;
+          opacity: 0.3;
+        }
+
+        .post-more-modal {
+          background-color: white;
+          padding: 15px;
+          position: absolute;
+          right: 0;
+          box-shadow: 2px 1px 26px 10px rgba(0, 0, 0, 0.75);
+          -webkit-box-shadow: 2px 1px 26px 10px rgba(0, 0, 0, 0.75);
+          -moz-box-shadow: 2px 1px 26px 10px rgba(0, 0, 0, 0.75);
+          list-style: none;
+          border-radius: 10px;
+
+          li {
+            color: black;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px 0;
+
+            &:hover {
+              border-bottom: 1px solid gray;
+            }
+          }
+        }
+      }
     }
 
     .post-center {

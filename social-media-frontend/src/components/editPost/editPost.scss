@@ -1,0 +1,67 @@
+@mixin display-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-post-container {
+  @include display-layout;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  padding: 20px;
+
+  form {
+    height: 300px;
+    width: 500px;
+    background-color: #fff;
+    border-radius: 10px;
+    @include display-layout;
+    flex-direction: column;
+    position: relative;
+
+    .input-container {
+      width: 80%;
+      textarea {
+        width: 100%;
+        padding: 10px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    button {
+      border: none;
+      color: #fff;
+      background-color: #1877f2;
+      cursor: pointer;
+      padding: 8px 20px;
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: 500;
+      border-radius: 5px;
+    }
+
+    .close-modal-button {
+      background-color: #fff;
+      @include display-layout;
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      position: absolute;
+      top: -18px;
+      right: -18px;
+      cursor: pointer;
+      -webkit-box-shadow: 0px 0px 17px 3px rgba(0, 0, 0, 0.75);
+      -moz-box-shadow: 0px 0px 17px 3px rgba(0, 0, 0, 0.75);
+      box-shadow: 0px 0px 17px 3px rgba(0, 0, 0, 0.75);
+    }
+  }
+}

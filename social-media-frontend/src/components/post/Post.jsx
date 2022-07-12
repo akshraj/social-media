@@ -1,13 +1,15 @@
 import './post.scss';
 import { MoreVert, ThumbUpOutlined } from '@material-ui/icons'
-import { useState } from 'react';
-import { useEffect } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { format } from 'timeago.js';
 import { useNavigate } from 'react-router-dom';
-import { likePost } from '../../apis/posts';
+import { deletePost, getPosts, likePost } from '../../apis/posts';
+import axios from 'axios';
+import { showEditModal, postEditdetails } from '../../redux/slices/postSlice';
 
 const url = process.env.REACT_APP_BACKEND_URL;
+
 export default function Post({
   _id,
   desc,
@@ -19,10 +21,13 @@ export default function Post({
   isProfile }) {
 
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
+  const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.auth.user);
 
   const [liked, setLiked] = useState(likes.length);
-  const [isLiked, setIsLiked] = useState(likes.includes(userId));
+  const [user, setUser] = useState(null)
+  const [showMore, setShowMore] = useState(false);
+  const [isLiked, setIsLiked] = useState(likes.includes(currentUser?._id));
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -37,8 +42,8 @@ export default function Post({
 
 
   const likeHandler = async () => {
+    await likePost(_id, currentUser?._id);
     setIsLiked(prev => !prev);
-    await likePost(_id, userId);
     setLiked(prev => isLiked ? prev - 1 : prev + 1);
   }
 
@@ -50,17 +55,38 @@ export default function Post({
     }
   }
 
+  const showMoreDropDown = () => {
+    setShowMore(prev => !prev);
+  }
+
+  const deletePostHandler = async () => {
+    await deletePost(_id, currentUser?._id);
+    await getPosts({ userId: currentUser?._id, dispatch });
+  }
+
+  const handleEditPost = () => {
+    setShowMore(false);
+    dispatch(showEditModal(true));
+    dispatch(postEditdetails({ _id, desc }))
+  }
+
   return (
     <div className="post">
+
       <div className="post-wrapper">
         <div className="post-top">
           <div className="post-top-left">
-            <img crossOrigin="anonymous" className="post-profile-img" style={{ cursor: !isProfile ? 'pointer' : 'default' }} src={user.profilePicture || `${process.env.REACT_APP_PUBLIC_FOLDER}/person/noAvatar.png`} alt="" onClick={handleNavigate} />
+            <img crossOrigin="anonymous" className="post-profile-img" style={{ cursor: !isProfile ? 'pointer' : 'default' }} src={user?.profilePicture || `${process.env.REACT_APP_PUBLIC_FOLDER}/person/noAvatar.png`} alt="" onClick={handleNavigate} />
             <span className="post-username">{user?.username}</span>
             <span className="post-date">{format(createdAt)}</span>
           </div>
           <div className="post-top-right">
-            <MoreVert />
+            <MoreVert onClick={showMoreDropDown} className={`post-top-right-icon ${currentUser?._id !== userId ? 'disabled' : ''}`} />
+            {showMore && <ul className="post-more-modal">
+              <li className="post-more-list-item" onClick={handleEditPost}>Edit</li>
+              <li className="post-more-list-item" onClick={deletePostHandler}>Delete</li>
+            </ul>
+            }
           </div>
         </div>
         <div className="post-center" style={{ marginTop: `${desc ? '10px' : ''}` }}>

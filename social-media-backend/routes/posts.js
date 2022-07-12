@@ -33,6 +33,7 @@ router.put('/:postId', async (req, res) => {
 //delete a post
 
 router.delete('/:postId', async (req, res) => {
+  console.log(req.body.userId)
   try {
     const post = await Post.findById(req.params.postId);
     if (post.userId === req.body.userId) {

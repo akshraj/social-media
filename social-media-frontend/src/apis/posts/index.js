@@ -44,3 +44,26 @@ export const createPost = async (post, userId) => {
     console.log(err.message)
   }
 }
+
+export const deletePost = async (postId, userId) => {
+  try {
+    await axios.delete(`${url}/posts/${postId}`, {
+      data: {
+        userId
+      },
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+}
+
+export const editPost = async (postId, userId, desc) => {
+  try {
+    await axios.put(`${url}/posts/${postId}`, {
+      userId,
+      desc
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+}

@@ -33,6 +33,7 @@ export default function TopBar() {
 
   const signOutHandler = () => {
     dispatch(signOut());
+    window.location.reload();
   }
 
   const personListViewHandler = (e) => {

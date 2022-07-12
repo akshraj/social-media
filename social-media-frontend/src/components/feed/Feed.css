@@ -7,4 +7,21 @@
 .feed .feed-wrapper {
   padding: 20px;
 }
+
+.feed .feed-wrapper .feed-no-post-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 20px;
+}
+
+.feed .feed-wrapper .feed-no-post-container h1 {
+  color: #726969;
+}
 /*# sourceMappingURL=Feed.css.map */

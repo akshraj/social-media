@@ -3,7 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 const INITIAL_STATE = {
   isFetching: false,
   posts: [],
-  error: null
+  error: null,
+  showEdit: false,
+  postIdToEdit: '',
+  postDescToEdit: ''
 }
 export const postSlice = createSlice({
   name: 'post',
@@ -21,10 +24,16 @@ export const postSlice = createSlice({
       state.isFetching = false;
       action.error = action.payload
     },
-
+    showEditModal(state, action) {
+      state.showEdit = action.payload;
+    },
+    postEditdetails(state, action) {
+      state.postIdToEdit = action.payload._id;
+      state.postDescToEdit = action.payload.desc;
+    }
   }
 });
 
-export const { postFetchStart, postFetchSuccess, postFetchFailed } = postSlice.actions;
+export const { postFetchStart, postFetchSuccess, postFetchFailed, showEditModal, postEditdetails } = postSlice.actions;
 
 export default postSlice.reducer;

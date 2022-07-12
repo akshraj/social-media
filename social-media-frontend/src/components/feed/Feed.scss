@@ -3,5 +3,15 @@
 
   .feed-wrapper {
     padding: 20px;
+    .feed-no-post-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+
+      h1 {
+        color: rgb(114, 105, 105);
+      }
+    }
   }
 }

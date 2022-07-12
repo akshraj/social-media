@@ -26,7 +26,9 @@ export default function Feed({ profile, userId }) {
     <div className="feed">
       <div className="feed-wrapper">
         {(!userId || userId === user?._id) && <Share />}
-        {posts?.map(post => <Post {...post} key={post._id} isProfile={profile} />)}
+        {posts?.length > 0 ? posts?.map(post => <Post {...post} key={post._id} isProfile={profile} />) : <div className="feed-no-post-container">
+          <h1>There are no posts by {!userId || userId === user?._id ? 'You' : 'User'}</h1>
+        </div>}
       </div>
     </div>
   )
