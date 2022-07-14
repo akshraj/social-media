@@ -6,12 +6,13 @@ const url = process.env.REACT_APP_BACKEND_URL
 export const getPosts = async ({ userId, profile = false, dispatch }) => {
   let slug = 'timeline/';
   if (profile) slug = 'profile/';
-  dispatch(postFetchStart());
   try {
+    dispatch(postFetchStart())
     const response = await axios.get(`${url}/posts/${slug}${userId}`);
-    dispatch(postFetchSuccess(response.data))
+    dispatch(postFetchSuccess(response.data));
   } catch (err) {
-    dispatch(postFetchFailed(err.message))
+    dispatch(postFetchFailed())
+    console.log(err.message);
   }
 }
 

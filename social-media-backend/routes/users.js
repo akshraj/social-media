@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const AuthService = require('../services/authService');
 const User = require('../models/User')
+const fs = require('fs');
+const path = require('path');
 
 //update user
 router.put('/:id', async (req, res) => {
@@ -13,7 +15,21 @@ router.put('/:id', async (req, res) => {
       }
     }
     try {
-      const user = await User.findByIdAndUpdate(req.params.id, {
+      const userProfile = await User.findById(req.params.id)
+      if (req.body.profilePicture && !req.body.firstTime) {
+        const oldPath = path.join(__dirname, "..", "public/images", userProfile.profilePicture);
+        console.log('fs.existsSync(oldPath)', fs.existsSync(oldPath))
+        if (fs.existsSync(oldPath)) {
+          fs.unlinkSync(oldPath, (err) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
+            return res.status(200).send('photo removed successfully');
+          });
+        }
+      }
+      await User.findByIdAndUpdate(req.params.id, {
         $set: req.body
       });
       return res.status(200).json("Account has been updated")
@@ -24,6 +40,8 @@ router.put('/:id', async (req, res) => {
     return res.status(403).json('you can only update your account!')
   }
 })
+
+
 
 //delete user
 
@@ -64,7 +82,6 @@ router.get('/:id/friend-requests', async (req, res) => {
     // const { requestSend, requestReceived, updatedAt, ...other } = requestReceivedByUsers._doc;
     return res.status(200).json(requestReceivedByUsers);
   } catch (err) {
-    console.log(err.message)
     return res.status(500).json(err)
   }
 });
@@ -161,8 +178,6 @@ router.put("/:id/send-request", async (req, res) => {
       const user = await User.findById(req.params.id);
       const currentUser = await User.findById(req.body.userId);
 
-      console.log(user, currentUser)
-
       if (!user.requestReceived.includes(req.body.userId)) {
         await Promise.all(
           [currentUser.updateOne({ $push: { requestSend: req.params.id } }), user.updateOne({ $push: { requestReceived: req.body.userId } })]
@@ -197,7 +212,6 @@ router.get('/:id/pending-requests', async (req, res) => {
       return { username, profilePicture, _id }
     });
 
-    console.log(filteredResult)
     return res.status(200).json(filteredResult);
   } catch (err) {
     return res.status(500).json(err.message);
@@ -232,7 +246,6 @@ router.put('/:id/pending-request-actions', async (req, res) => {
       }
     }
   } catch (err) {
-    console.log(err.message);
     return res.status(500).json(err.message)
   }
 

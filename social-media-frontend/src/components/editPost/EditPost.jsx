@@ -18,14 +18,16 @@ export default function EditPost() {
   useEffect(() => {
     const body = document.querySelector('body');
     body.style.overflow = showEdit ? 'hidden' : 'auto';
-  }, [showEdit])
+  }, [showEdit]);
+
+  console.log(showEdit)
 
   const submitHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setShowSuccessMessage(false);
     await editPost(postIdToEdit, currentUser?._id, inputValue);
-    await getPosts({ userId: currentUser?._id, dispatch });
+    // await getPosts({ userId: currentUser?._id, dispatch });
     setShowSuccessMessage(true);
     setIsLoading(false);
   }
@@ -34,16 +36,21 @@ export default function EditPost() {
     setInputValue(e.target.value)
   }
 
+  const closeModal = () => {
+    dispatch(showEditModal());
+    window.location.reload();
+  }
+
 
   return ReactDOM.createPortal(
     <div className="edit-post-container">
       <form action="" onSubmit={submitHandler}>
-        {showSuccessMessage && <p style={{ backgroundColor: '#d5a6bd', padding: '10px', 'margin-bottom': '10px', borderRadius: '5px', 'font-weight': '500', color: 'white' }}>The Post has been updated</p>}
+        {showSuccessMessage && <p style={{ backgroundColor: '#d5a6bd', padding: '10px', 'marginBottom': '10px', borderRadius: '5px', 'fontWeight': '500', color: 'white' }}>The Post has been updated</p>}
         <div className="input-container">
           <textarea rows="10" placeholder="description" value={inputValue} onChange={handleChange} />
         </div>
         <button>{isLoading ? <Spinner /> : 'Submit'}</button>
-        <div className="close-modal-button" onClick={() => dispatch(showEditModal(false))}>
+        <div className="close-modal-button" onClick={closeModal}>
           <Close />
         </div>
       </form>

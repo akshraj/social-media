@@ -5,9 +5,11 @@ import { useRef, useState } from 'react';
 import { createPost, getPosts, imageUpload } from '../../apis/posts';
 
 const url = process.env.REACT_APP_PUBLIC_FOLDER;
+const imageUrl = process.env.REACT_APP_BACKEND_IMAGE_URL
 
 export default function Share() {
-  const user = useSelector(state => state.auth.user);
+  const currentUser = useSelector(state => state.auth.user);
+  const currentUserState = useSelector(state => state.user.currentUserState);
   const shareRef = useRef('');
 
   const [file, setFile] = useState(null);
@@ -32,9 +34,9 @@ export default function Share() {
     }
 
     try {
-      await createPost(newPost, user._id);
+      await createPost(newPost, currentUser._id);
       setFile(null);
-      await getPosts({ userId: user?._id, dispatch });
+      window.location.reload();
       shareRef.current.value = '';
     } catch (err) {
       console.log(err);
@@ -45,8 +47,8 @@ export default function Share() {
     <div className="share">
       <div className="share-wrapper">
         <div className="share-top">
-          <img className="share-profile-img" src={user?.profilePicture || url + '/person/noAvatar.png'} alt="" />
-          <input type="text" className='share-input' placeholder={`What's in your mind ${user?.username}?`} ref={shareRef} />
+          <img className="share-profile-img" src={currentUserState?.profilePicture ? `${imageUrl}/${currentUserState?.profilePicture}` : url + '/person/noAvatar.png'} alt="" />
+          <input type="text" className='share-input' placeholder={`What's in your mind ${currentUserState?.username}?`} ref={shareRef} />
         </div>
         <hr className="share-hr" />
         {file && (

@@ -9,7 +9,8 @@
 }
 
 .rightbar .rightbar-wrapper .rightbar-title {
-  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .rightbar .rightbar-wrapper .birthday-container {
@@ -58,10 +59,40 @@
   display: flex;
 }
 
-.rightbar-title {
-  font-size: 18px;
+.right-edit-button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.right-edit-button-container button {
+  border: none;
+  margin-right: 30px;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-radius: 8px;
   font-weight: 500;
-  margin-bottom: 10px;
+}
+
+.right-edit-button-container button .right-edit-button-icon {
+  font-size: 16px;
+  margin-left: 5px;
 }
 
 .rightbar-following-img {

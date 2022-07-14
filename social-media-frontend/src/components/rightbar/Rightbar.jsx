@@ -3,40 +3,29 @@ import FriendSuggestion from '../friendSuggestion/friendSuggestion';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllUsers, getFriends } from '../../apis/user';
+import { Edit } from '@material-ui/icons';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function Rightbar({ profileUser }) {
   const dispatch = useDispatch();
   const friends = useSelector(state => state.user.friends);
   const users = useSelector(state => state.user.users);
   const { user } = useSelector(state => state.auth);
-
+  const navigate = useNavigate();
+  const { userId } = useParams();
 
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        await getFriends(user?._id, dispatch)
+        await getFriends(userId, dispatch)
         await getAllUsers(user?._id, dispatch)
       } catch (err) {
-        console.log(err.message)
+        console.log(err.message);
       }
     }
     fetchFriends();
 
-  }, [user?._id, dispatch]);
-
-
-  const relationship = () => {
-    switch (profileUser?.relationship) {
-      case 1:
-        return "It's complicated"
-      case 2:
-        return 'Married'
-      case 3:
-        return 'Widowed'
-      default:
-        return 'Single'
-    }
-  }
+  }, [user?._id, dispatch, userId]);
 
   const HomeRightBar = () => {
     return <>
@@ -55,19 +44,14 @@ export default function Rightbar({ profileUser }) {
 
   const ProfileRightBar = () => {
     return <>
-      <h4 className="rightbar-title">User Information</h4>
+      <div className="right-edit-button-container">
+        <h4 className="rightbar-title">User Information</h4>
+        {user?._id === userId && <button onClick={() => navigate(`edit`)}>Edit Profile <Edit className="right-edit-button-icon" /></button>}
+      </div>
       <div className="rightbar-info">
         <div className="rightbar-info-item">
           <span className="rightbar-info-key">City:</span>
-          <span className="rightbar-info-value">{profileUser?.city}</span>
-        </div>
-        <div className="rightbar-info-item">
-          <span className="rightbar-info-key">From:</span>
-          <span className="rightbar-info-value">{profileUser?.from}</span>
-        </div>
-        <div className="rightbar-info-item">
-          <span className="rightbar-info-key">Relationship:</span>
-          <span className="rightbar-info-value">{relationship()}</span>
+          <span className="rightbar-info-value">{profileUser?.city || '-'}</span>
         </div>
       </div>
       {friends?.length > 0 && <><h4 className="rightbar-title">User friends</h4>

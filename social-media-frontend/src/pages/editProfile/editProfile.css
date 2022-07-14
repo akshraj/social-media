@@ -1,0 +1,142 @@
+.editProfile-wrapper {
+  height: 100vh;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.editProfile-wrapper .profile-container {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 20px 0;
+}
+
+.editProfile-wrapper .profile-container .profile-img-container {
+  height: 200px;
+  width: 200px;
+  background-color: #fff;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #1877f2;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(89, 102, 240, 0.75);
+  box-shadow: 0px 0px 20px 0px rgba(89, 102, 240, 0.75);
+}
+
+.editProfile-wrapper .profile-container .profile-img-container img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.editProfile-wrapper .profile-container .profile-file-container {
+  margin-top: 10px;
+}
+
+.editProfile-wrapper .profile-container .profile-file-container label {
+  cursor: pointer;
+  color: #5966f0;
+}
+
+.editProfile-wrapper .profile-container .profile-file-container input {
+  display: none;
+}
+
+.editProfile-wrapper .profile-input-container {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  width: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.editProfile-wrapper .profile-input-container .edit-button {
+  border: none;
+  margin-top: 20px;
+  width: 150px;
+  height: 50px;
+  background-color: #1877f2;
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
+  border-radius: 5px;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.editProfile-wrapper .profile-input-container .edit-button:hover {
+  background-color: #1252a5;
+}
+
+.editProfile-wrapper .profile-input-container .profile-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 10px;
+}
+
+.editProfile-wrapper .profile-input-container .profile-input input {
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  width: 500px;
+  border-bottom: 1px solid gray;
+}
+
+.editProfile-wrapper .profile-input-container .profile-input input:focus {
+  outline: none;
+}
+
+.editProfile-wrapper .profile-input-container .profile-input select {
+  padding: 10px;
+  width: 500px;
+  margin: 10px;
+  border: none;
+  border-bottom: 1px solid gray;
+  cursor: pointer;
+}
+
+.editProfile-wrapper .profile-input-container .profile-input select:focus {
+  outline: none;
+}
+
+.editProfile-wrapper .profile-input-container .profile-input select option {
+  font-weight: bold !important;
+  color: #fff !important;
+  text-transform: uppercase;
+}
+/*# sourceMappingURL=editProfile.css.map */

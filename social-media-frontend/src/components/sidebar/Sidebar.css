@@ -27,6 +27,7 @@
       -ms-flex-align: center;
           align-items: center;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .sidebar .sidebar-wrapper .sidebar-list .sidebar-list-item .sidebar-icon {

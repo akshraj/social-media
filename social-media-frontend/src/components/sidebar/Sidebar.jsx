@@ -11,24 +11,28 @@ import {
   School,
 } from '@material-ui/icons'
 import CloseFriend from '../closeFriend/CloseFriend'
-import { Users } from '../../dummyData';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { getFriends } from '../../apis/user';
+import axios from 'axios';
 
+const url = process.env.REACT_APP_BACKEND_URL;
 export default function Sidebar() {
   const user = useSelector(state => state.auth.user);
-  const friends = useSelector(state => state.user.friends);
+  const [myFriends, setMyFriends] = useState([]);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        await getFriends(user._id, dispatch);
+        const response = await axios.get(`${url}/users/${user?._id}/friends`);
+        setMyFriends(response.data)
       } catch (err) {
         console.log(err)
       }
     }
-    fetchFriends()
+    fetchFriends();
   }, [user._id, dispatch]);
 
 
@@ -36,7 +40,7 @@ export default function Sidebar() {
     <div className="sidebar">
       <div className="sidebar-wrapper">
         <ul className="sidebar-list">
-          <li className="sidebar-list-item">
+          <li className="sidebar-list-item" onClick={() => navigate("/")}>
             <RssFeed className="sidebar-icon" />
             <span className="sidebar-list-item-text">Feed</span>
           </li>
@@ -78,7 +82,7 @@ export default function Sidebar() {
         </button>
         <hr className='sidebar-hr' />
         <ul className="sidebar-friend-list">
-          {friends && friends.map(friend => <CloseFriend {...friend} key={friend._id} />)}
+          {myFriends && myFriends?.map(friend => <CloseFriend {...friend} key={friend._id} />)}
         </ul>
       </div>
     </div>

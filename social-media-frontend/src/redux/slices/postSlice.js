@@ -24,8 +24,8 @@ export const postSlice = createSlice({
       state.isFetching = false;
       action.error = action.payload
     },
-    showEditModal(state, action) {
-      state.showEdit = action.payload;
+    showEditModal(state) {
+      state.showEdit = !state.showEdit;
     },
     postEditdetails(state, action) {
       state.postIdToEdit = action.payload._id;

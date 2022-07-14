@@ -1,3 +1,9 @@
+@mixin display-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .rightbar {
   flex: 3.5;
 
@@ -5,7 +11,8 @@
     padding: 20px 20px 0 0;
 
     .rightbar-title {
-      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: 500;
     }
 
     .birthday-container {
@@ -45,10 +52,24 @@
   }
 }
 
-.rightbar-title {
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 10px;
+.right-edit-button-container {
+  @include display-layout;
+  margin-bottom: 20px;
+
+  button {
+    border: none;
+    margin-right: 30px;
+    padding: 8px 10px;
+    cursor: pointer;
+    @include display-layout;
+    border-radius: 8px;
+    font-weight: 500;
+
+    .right-edit-button-icon {
+      font-size: 16px;
+      margin-left: 5px;
+    }
+  }
 }
 
 .rightbar-following-img {

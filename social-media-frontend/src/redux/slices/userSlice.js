@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   currentUserRequestSend: [],
   pendingRequests: [],
   sendRequestRes: null,
+  currentUserState: null
 }
 
 export const userSlice = createSlice({
@@ -43,10 +44,13 @@ export const userSlice = createSlice({
     },
     sendRequestResponseSuccess(state, action) {
       state.sendRequestRes = action.payload
+    },
+    getUserCurrentStateSuccess(state, action) {
+      state.currentUserState = action.payload
     }
   }
 });
 
-export const { friendFetching, friendFetcingSuccess, friendFetchingFailed, usersFetchingStart, usersFetcingSuccess, usersFetchingFailed, pendingRequestsSuccess, sendRequestResponseSuccess } = userSlice.actions;
+export const { friendFetching, friendFetcingSuccess, friendFetchingFailed, usersFetchingStart, usersFetcingSuccess, usersFetchingFailed, pendingRequestsSuccess, sendRequestResponseSuccess, getUserCurrentStateSuccess } = userSlice.actions;
 
 export default userSlice.reducer;

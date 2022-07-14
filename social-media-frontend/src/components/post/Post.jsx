@@ -23,22 +23,25 @@ export default function Post({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.auth.user);
-
-  const [liked, setLiked] = useState(likes.length);
   const [user, setUser] = useState(null)
+  const [liked, setLiked] = useState(likes.length);
   const [showMore, setShowMore] = useState(false);
   const [isLiked, setIsLiked] = useState(likes.includes(currentUser?._id));
+
+
   useEffect(() => {
-    const getUser = async () => {
+    const getUserAsync = async () => {
       try {
         const response = await axios.get(`${url}/users/${userId}`);
-        setUser(response.data);
+        setUser(response?.data);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
+
     }
-    getUser();
-  }, [userId])
+    getUserAsync()
+  }, [userId, dispatch]);
+
 
 
   const likeHandler = async () => {
@@ -51,7 +54,7 @@ export default function Post({
     if (isProfile) {
       return;
     } else {
-      navigate(`profile/${userId}`)
+      navigate(`profile/${userId}`);
     }
   }
 
@@ -61,22 +64,21 @@ export default function Post({
 
   const deletePostHandler = async () => {
     await deletePost(_id, currentUser?._id);
-    await getPosts({ userId: currentUser?._id, dispatch });
+    window.location.reload();
   }
 
   const handleEditPost = () => {
     setShowMore(false);
-    dispatch(showEditModal(true));
-    dispatch(postEditdetails({ _id, desc }))
+    dispatch(showEditModal());
+    dispatch(postEditdetails({ _id, desc }));
   }
 
   return (
     <div className="post">
-
       <div className="post-wrapper">
         <div className="post-top">
           <div className="post-top-left">
-            <img crossOrigin="anonymous" className="post-profile-img" style={{ cursor: !isProfile ? 'pointer' : 'default' }} src={user?.profilePicture || `${process.env.REACT_APP_PUBLIC_FOLDER}/person/noAvatar.png`} alt="" onClick={handleNavigate} />
+            <img crossOrigin="anonymous" className="post-profile-img" style={{ cursor: !isProfile ? 'pointer' : 'default' }} src={user?.profilePicture ? `${process.env.REACT_APP_BACKEND_IMAGE_URL}/${user?.profilePicture}` : `${process.env.REACT_APP_PUBLIC_FOLDER}/person/noAvatar.png`} alt="" onClick={handleNavigate} />
             <span className="post-username">{user?.username}</span>
             <span className="post-date">{format(createdAt)}</span>
           </div>

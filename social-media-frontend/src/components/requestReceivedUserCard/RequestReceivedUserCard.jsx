@@ -40,7 +40,7 @@ export default function RequestReceivedUserCard({ _id, username, profilePicture 
   return (
     <div className="card-wrapper">
       <div className="card-img-container">
-        <img src={profilePicture ? process.env.REACT_APP_BACKEND_IMAGE_URL + profilePicture : process.env.REACT_APP_PUBLIC_FOLDER + '/person/noAvatar.png'} alt="" />
+        <img src={profilePicture ? process.env.REACT_APP_BACKEND_IMAGE_URL + "/" + profilePicture : process.env.REACT_APP_PUBLIC_FOLDER + '/person/noAvatar.png'} alt="" />
       </div>
       <div className="card-info-container">
         <span className="request-user-name">{username}</span>
